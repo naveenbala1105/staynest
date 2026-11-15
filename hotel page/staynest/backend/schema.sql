@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS hotels (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  description TEXT DEFAULT '',
+  location VARCHAR(80) NOT NULL,
+  price INTEGER NOT NULL CHECK (price > 0),
+  image VARCHAR(200),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS bookings (
+  id SERIAL PRIMARY KEY,
+  ref VARCHAR(30) UNIQUE NOT NULL,
+  hotel_id INTEGER NOT NULL REFERENCES hotels(id) ON DELETE CASCADE,
+  customer_name VARCHAR(120) NOT NULL,
+  email VARCHAR(120) NOT NULL,
+  phone VARCHAR(15) NOT NULL,
+  check_in DATE NOT NULL,
+  check_out DATE NOT NULL,
+  guests INTEGER NOT NULL,
+  rooms INTEGER NOT NULL,
+  nights INTEGER NOT NULL,
+  total INTEGER NOT NULL,
+  status VARCHAR(20) DEFAULT 'Confirmed',
+  created_at TIMESTAMP DEFAULT NOW()
+);
